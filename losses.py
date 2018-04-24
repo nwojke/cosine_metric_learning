@@ -26,7 +26,7 @@ def softmargin_triplet_loss(features, labels, create_summaries=True):
         A matrix of shape NxM that contains the M-dimensional feature vectors
         of N objects (floating type).
     labels : tf.Tensor
-        The one-dimensional array of length M that contains for each feature
+        The one-dimensional array of length N that contains for each feature
         the associated class label (integer type).
     create_summaries : Optional[bool]
         If True, creates summaries to monitor training behavior.
@@ -89,7 +89,7 @@ def magnet_loss(features, labels, margin=1.0, unique_labels=None):
         A matrix of shape NxM that contains the M-dimensional feature vectors
         of N objects (floating type).
     labels : tf.Tensor
-        The one-dimensional array of length M that contains for each feature
+        The one-dimensional array of length N that contains for each feature
         the associated class label (integer type).
     margin : float
         A scalar margin hyperparameter.
