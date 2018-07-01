@@ -6,9 +6,15 @@ This repository contains code for training a metric feature representation to be
 used with the [deep_sort tracker](https://github.com/nwojke/deep_sort). The
 approach is described in
 
-    Wojke, Nicolai and Bewley, Alex (2018) Deep Cosine Metric Learning for
-    Person Re-Identification. In: IEEE Winter Conference on Applications of
-    Computer Vision (WACV). [Manuscript accepted for publication]    
+    @inproceedings{Wojke2018deep,
+      title={Deep Cosine Metric Learning for Person Re-identification},
+      author={Wojke, Nicolai and Bewley, Alex},
+      booktitle={2018 IEEE Winter Conference on Applications of Computer Vision (WACV)},
+      year={2018},
+      pages={748--756},
+      organization={IEEE}
+      doi={10.1109/WACV.2018.00087}
+    }
 
 Pre-trained models used in the paper can be found
 [here](https://owncloud.uni-koblenz-landau.de/owncloud/s/leZNP94NUN58M73). A
