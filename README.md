@@ -12,7 +12,7 @@ approach is described in
       booktitle={2018 IEEE Winter Conference on Applications of Computer Vision (WACV)},
       year={2018},
       pages={748--756},
-      organization={IEEE}
+      organization={IEEE},
       doi={10.1109/WACV.2018.00087}
     }
 
