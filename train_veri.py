@@ -52,26 +52,26 @@ class VeRi(object):
         self._seed = seed
 
     def read_train(self):
-        filenames, ids, camera_indices = veri.read_train_split_to_str(
+        images, ids, camera_indices = veri.read_train_split_to_image(
             self._dataset_dir)
         train_indices, _ = util.create_validation_split(
             np.asarray(ids, np.int64), self._num_validation_y, self._seed)
 
-        filenames = [filenames[i] for i in train_indices]
-        ids = [ids[i] for i in train_indices]
-        camera_indices = [camera_indices[i] for i in train_indices]
-        return filenames, ids, camera_indices
+        images = images[train_indices]
+        ids = ids[train_indices]
+        camera_indices = camera_indices[train_indices]
+        return images, ids, camera_indices
 
     def read_validation(self):
-        filenames, ids, camera_indices = veri.read_train_split_to_str(
+        images, ids, camera_indices = veri.read_train_split_to_image(
             self._dataset_dir)
         _, valid_indices = util.create_validation_split(
             np.asarray(ids, np.int64), self._num_validation_y, self._seed)
 
-        filenames = [filenames[i] for i in valid_indices]
-        ids = [ids[i] for i in valid_indices]
-        camera_indices = [camera_indices[i] for i in valid_indices]
-        return filenames, ids, camera_indices
+        images = images[valid_indices]
+        ids = ids[valid_indices]
+        camera_indices = camera_indices[valid_indices]
+        return images, ids, camera_indices
 
 
 def main():
