@@ -17,8 +17,8 @@ approach is described in
     }
 
 Pre-trained models used in the paper can be found
-[here](https://owncloud.uni-koblenz-landau.de/owncloud/s/leZNP94NUN58M73). A
-preprint of the paper is available [here](http://elib.dlr.de/116408/).
+[here](https://drive.google.com/open?id=13HtkxD6ggcrGJLWaUcqgXl2UO6-p4PK0).
+A preprint of the paper is available [here](http://elib.dlr.de/116408/).
 The repository comes with code to train a model on the
 [Market1501](http://www.liangzheng.org/Project/project_reid.html)
 and [MARS](http://www.liangzheng.com.cn/Project/project_mars.html) datasets.
