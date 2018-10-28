@@ -134,7 +134,7 @@ def magnet_loss(features, labels, margin=1.0, unique_labels=None):
     const = one / (minus_two * (variance + eps))
     linear = const * squared_distance - y_mat * margin
 
-    maxi = tf.reduce_max(linear, reduction_indices=[1], keepdims=True)
+    maxi = tf.reduce_max(linear, reduction_indices=[1], keep_dims=True)
     loss_mat = tf.exp(linear - maxi)
 
     a = tf.reduce_sum(y_mat * loss_mat, reduction_indices=[1])
