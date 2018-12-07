@@ -33,19 +33,20 @@ def read_train_test_directory_to_str(directory):
     def to_label(x):
         return int(x) if x.isdigit() else -1
 
-    dirnames = os.listdir(directory)
-    image_filenames, ids, camera_indices, tracklet_indices = [], [], [], []
-    for dirname in dirnames:
-        filenames = os.listdir(os.path.join(directory, dirname))
-        filenames = [
-            f for f in filenames if os.path.splitext(f)[1] == ".jpg"]
-        image_filenames += [
-            os.path.join(directory, dirname, f) for f in filenames]
-        ids += [to_label(dirname) for _ in filenames]
-        camera_indices += [int(f[5]) for f in filenames]
-        tracklet_indices += [int(f[7:11]) for f in filenames]
+    filenames = os.listdir(directory)
+    print("filenames")
+    print(filenames)
+    image_filenames, ids, tracklet_indices = [], [], []
+    # for dirname in dirnames:
+    # filenames = os.listdir(os.path.join(directory, dirname))
+    filenames = [
+        f for f in filenames if os.path.splitext(f)[1] == ".jpg"]
+    image_filenames += [
+        os.path.join(directory, f) for f in filenames]
+    ids += [int(f[0]) for f in filenames]
+    tracklet_indices += [int(f[f.find('_') + 1: f.find('.')]) for f in filenames]
 
-    return image_filenames, ids, camera_indices, tracklet_indices
+    return image_filenames, ids, tracklet_indices
 
 
 def read_train_test_directory_to_image(directory, image_shape=(128, 64)):
@@ -65,7 +66,6 @@ def read_train_test_directory_to_image(directory, image_shape=(128, 64)):
 
         * Tensor of images in BGR color space.
         * One dimensional array of unique IDs for the individuals in the images.
-        * One dimensional array of camera indices.
         * One dimensional array of tracklet indices.
 
     """
@@ -73,7 +73,7 @@ def read_train_test_directory_to_image(directory, image_shape=(128, 64)):
         (lambda x: x) if image_shape == IMAGE_SHAPE[:2]
         else (lambda x: cv2.resize(x, image_shape[::-1])))
 
-    filenames, ids, camera_indices, tracklet_indices = (
+    filenames, ids, tracklet_indices = (
         read_train_test_directory_to_str(directory))
 
     images = np.zeros((len(filenames), ) + image_shape + (3, ), np.uint8)
@@ -83,9 +83,8 @@ def read_train_test_directory_to_image(directory, image_shape=(128, 64)):
         image = cv2.imread(filename, cv2.IMREAD_COLOR)
         images[i] = reshape_fn(image)
     ids = np.asarray(ids, dtype=np.int64)
-    camera_indices = np.asarray(camera_indices, dtype=np.int64)
     tracklet_indices = np.asarray(tracklet_indices, dtype=np.int64)
-    return images, ids, camera_indices, tracklet_indices
+    return images, ids, tracklet_indices
 
 
 def read_train_split_to_str(dataset_dir):

@@ -20,15 +20,14 @@ class Mars(object):
         self._seed = seed
 
     def read_train(self):
-        filenames, ids, camera_indices, _ = mars.read_train_split_to_str(
+        filenames, ids, _ = mars.read_train_split_to_str(
             self._dataset_dir)
         train_indices, _ = util.create_validation_split(
             np.asarray(ids, np.int64), self._num_validation_y, self._seed)
 
         filenames = [filenames[i] for i in train_indices]
         ids = [ids[i] for i in train_indices]
-        camera_indices = [camera_indices[i] for i in  train_indices]
-        return filenames, ids, camera_indices
+        return filenames, ids
 
     def read_validation(self):
         filenames, ids, camera_indices, _ = mars.read_train_split_to_str(
@@ -38,8 +37,7 @@ class Mars(object):
 
         filenames = [filenames[i] for i in valid_indices]
         ids = [ids[i] for i in valid_indices]
-        camera_indices = [camera_indices[i] for i in valid_indices]
-        return filenames, ids, camera_indices
+        return filenames, ids
 
     def read_test_filenames(self):
         filename = os.path.join(self._dataset_dir, "info", "test_name.txt")
@@ -60,7 +58,7 @@ def main():
     dataset = Mars(args.dataset_dir, num_validation_y=0.1, seed=1234)
 
     if args.mode == "train":
-        train_x, train_y, _ = dataset.read_train()
+        train_x, train_y = dataset.read_train()
         print("Train set size: %d images, %d identities" % (
             len(train_x), len(np.unique(train_y))))
 
@@ -72,7 +70,7 @@ def main():
             net.preprocess, network_factory, train_x, train_y,
             num_images_per_id=4, image_shape=IMAGE_SHAPE, **train_kwargs)
     elif args.mode == "eval":
-        valid_x, valid_y, camera_indices = dataset.read_validation()
+        valid_x, valid_y = dataset.read_validation()
         print("Validation set size: %d images, %d identities" % (
             len(valid_x), len(np.unique(valid_y))))
 
@@ -81,7 +79,7 @@ def main():
             add_logits=args.loss_mode == "cosine-softmax")
         eval_kwargs = train_app.to_eval_kwargs(args)
         train_app.eval_loop(
-            net.preprocess, network_factory, valid_x, valid_y, camera_indices,
+            net.preprocess, network_factory, valid_x, valid_y,
             image_shape=IMAGE_SHAPE, num_galleries=20, **eval_kwargs)
     elif args.mode == "export":
         filenames = dataset.read_test_filenames()
