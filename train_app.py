@@ -292,7 +292,7 @@ def create_trainer(preprocess_fn, network_factory, read_from_file, image_shape,
     return trainer, train_op
 
 
-def eval_loop(preprocess_fn, network_factory, data_x, data_y, camera_indices,
+def eval_loop(preprocess_fn, network_factory, data_x, data_y,
               log_dir, eval_log_dir, image_shape=None, run_id=None,
               loss_mode="cosine-softmax", num_galleries=10, random_seed=4321):
     """Evaluate a running training session using CMC metric averaged over
@@ -358,7 +358,7 @@ def eval_loop(preprocess_fn, network_factory, data_x, data_y, camera_indices,
     probes, galleries = [], []
     for i in range(num_galleries):
         probe_indices, gallery_indices = util.create_cmc_probe_and_gallery(
-            data_y, camera_indices, seed=random_seed + i)
+            data_y, seed=random_seed + i)
         probes.append(probe_indices)
         galleries.append(gallery_indices)
     probes, galleries = np.asarray(probes), np.asarray(galleries)

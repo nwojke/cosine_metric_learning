@@ -113,7 +113,7 @@ def limit_num_elements_per_identity(data_y, max_num_images_per_id, seed=None):
     return valid_mask
 
 
-def create_cmc_probe_and_gallery(data_y, camera_indices=None, seed=None):
+def create_cmc_probe_and_gallery(data_y, seed=None):
     """Create probe and gallery images for evaluation of CMC top-k statistics.
 
     For every identity, this function selects one image as probe and one image
@@ -138,8 +138,7 @@ def create_cmc_probe_and_gallery(data_y, camera_indices=None, seed=None):
 
     """
     data_y = np.asarray(data_y)
-    if camera_indices is None:
-        camera_indices = np.zeros_like(data_y, dtype=np.int)
+    camera_indices = np.zeros_like(data_y, dtype=np.int)
     camera_indices = np.asarray(camera_indices)
 
     random_generator = np.random.RandomState(seed=seed)
