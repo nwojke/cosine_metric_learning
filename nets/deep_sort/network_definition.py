@@ -80,8 +80,11 @@ def create_network(images, num_classes=None, add_logits=True, reuse=None,
 
     features = network
 
-    # Features in rows, normalize axis 1.
-    features = tf.nn.l2_normalize(features, dim=1)
+    features = slim.batch_norm(features, scope="ball", reuse=reuse)
+    feature_norm = tf.sqrt(
+        tf.constant(1e-8, tf.float32) +
+        tf.reduce_sum(tf.square(features), [1], keepdims=True))
+    features = features / feature_norm
 
     if add_logits:
         with slim.variable_scope.variable_scope("ball", reuse=reuse):
